@@ -31,11 +31,11 @@ class TripList extends StatefulWidget {
               children: <Widget>[
                 Padding(
                  padding: EdgeInsets.only(
-                 top: 10.0,
+                 top: 30.0,
                  bottom: 10.0
               ),
-              child:   
-              Row(
+              child:ListTile(
+                title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                 Expanded(child:Text( 
@@ -44,18 +44,29 @@ class TripList extends StatefulWidget {
                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
 
                 )),
+                Expanded(child:Text( 
+                 "",
+                 textDirection: TextDirection.ltr,
+                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
+
+                )),
                  Expanded(child:
                  Container(
-                 padding: EdgeInsets.all(5),
+                 padding: EdgeInsets.all(4.0),
+                  alignment: Alignment(0.0, 0.0),
                   decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  border: Border.all(width: 1.0, color: Colors.deepPurple),
+                  color: Colors.deepPurple
                   
                 ),
-                child: Text('$count Trip(s)', style: TextStyle(backgroundColor: Colors.blue),),
+                child: Text('$count Trip(s)', style: TextStyle(color: Colors.white)),
                ),     
                 ),
           ],
-          )
+          ),
+              )  
+              
           ),
           Padding(
              padding: EdgeInsets.only(

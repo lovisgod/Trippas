@@ -11,7 +11,6 @@ import 'package:trippas/util/dbHelper.dart';
 // ];
 DbHelper dbHelper = DbHelper();
 
-
 class TripDetail extends StatefulWidget {
   final Trip trip;
   TripDetail(this.trip);
@@ -33,7 +32,7 @@ class TripDetail extends StatefulWidget {
      'Health',
      'Vacation'
      ];
-   String _type  = 'Trip type';
+   String _type  = 'Business';
    TextEditingController departController = TextEditingController();
    TextEditingController destController = TextEditingController();
    TextEditingController startDController = TextEditingController();
@@ -46,14 +45,19 @@ class TripDetail extends StatefulWidget {
     TextStyle textStyle = Theme.of(context).textTheme.title;
     if (this.trip.departure.isEmpty){
       this.title = 'Create Trip';
+      debugPrint(this.title);
     } else {
       this.title = 'Update Trip';
+      debugPrint(this.title);
     }
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
        automaticallyImplyLeading: true,
-       title: Text(this.title),
+         iconTheme: IconThemeData(
+         color: Colors.black
+       ),
+       title: Text(this.title, style: TextStyle(color: Colors.black),),
        backgroundColor: Colors.white,
       ),
       body: Container(
@@ -180,14 +184,14 @@ class TripDetail extends StatefulWidget {
                 bottom: 10.0
               ),
             child: ListTile( title: DropdownButton<String>(
-                        items: _types.map((String value) {
+                        items: this._types.map((String value) {
                            return DropdownMenuItem<String>(
                              value: value,
                              child: Text(value)
                            );
                          }).toList(), 
                          style: textStyle,
-                         value: _type,
+                         value: this._type,
                          onChanged: (String value) {
                            updateType(value);
                        }
@@ -201,7 +205,7 @@ class TripDetail extends StatefulWidget {
                   ),
                    child: RaisedButton(
                         color: Colors.blue,
-                        textColor: Theme.of(context).primaryColorLight,
+                        textColor: Colors.white,
                         child: Text(
                          'Save Trip',
                          textScaleFactor: 1.5, // makes the text 50% bigger
@@ -218,7 +222,10 @@ class TripDetail extends StatefulWidget {
     }
                            
     void updateType(String value) {
+      setState(() {
+        print(value); 
       this._type = value;
+      });
       trip.tripType = value;
 
     }

@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
+import 'package:trippas/screens/TripList.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,32 +19,58 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   @override
-  Widget build(BuildContext context){
+  State<StatefulWidget> createState() {
+    return HomePageState();
+      }
+      
+    }
     
-  Future.delayed(const Duration(milliseconds: 1000), () {
-     Toast.show(
-       "Welcome to Trippas",
-        context,
-        duration: Toast.LENGTH_LONG,
-        textColor: Colors.white,
-        backgroundColor: Colors.deepPurple,
-        gravity:  Toast.BOTTOM 
-     );
-   });
+  class HomePageState extends State {
+     @override
+    void initState() {
+    super.initState();
+    move();
+  }
+     @override
+     Widget build(BuildContext context) {
+    // TODO: implement build
     return Scaffold(
       body: Center(
-        child: Text(
-          "Trippas",
-          style: TextStyle(
-             color: Colors.deepPurple,
-             fontWeight: FontWeight.bold,
-             fontSize: 40
-      )
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Trippas",
+              style: TextStyle(
+                fontSize: 40.0,
+                color: Colors.blue
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(top: 20.0)),
+            CircularProgressIndicator(
+              backgroundColor: Colors.blue,
+              strokeWidth: 1,
+           )
+         ],
+       ),
       ),
     );
   }
-  
+
+   move() async {
+    var duration = new Duration(seconds: 6);
+    return new Timer(duration, route);
+  }
+
+  route(){
+    Toast.show("Toast plugin app", context, 
+    duration: Toast.LENGTH_SHORT,
+     gravity:  Toast.BOTTOM,
+      backgroundColor: Colors.blue,
+      textColor: Colors.white
+      );
+     Navigator.push(context, MaterialPageRoute(builder: (context) =>TripList()));
+  }
 }

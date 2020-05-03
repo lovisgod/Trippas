@@ -18,7 +18,7 @@ class Item extends StatefulWidget {
   class _itemState extends State {
     DbHelper dbHelper = DbHelper();
     Trip trip;
-    List<String> options = ['View','Delete'];
+    List<String> options = ['Update','Delete'];
     
     _itemState(this.trip);
   @override
@@ -44,8 +44,10 @@ class Item extends StatefulWidget {
                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
 
                 )),
-                Expanded(child:Icon( 
-                  Icons.flight_takeoff,
+                Expanded(child:ImageIcon( 
+                   AssetImage(
+                   'images/airplane.png',
+                  ),
                   color: Colors.grey,
                   size: 24.0,
                   semanticLabel: '',
@@ -178,30 +180,31 @@ class Item extends StatefulWidget {
               Color getTypeColor(Trip trip) {   
                  switch (trip.trip_type) {
                   case 'Business' :
-                   return Colors.blue;
+                   return Color(0xff3E64FF);
                   break;
                   case 'Education' :
-                   return Colors.lightBlue;
+                   return Color(0xff3EBAFF);
                   break;
-                  case 'Health' :
-                   return Colors.red;
+                  case 'Hospital' :
+                   return Color(0xffFF3E6C);
                   break; 
                   case 'Vacation' :
-                   return Colors.yellow;
+                   return Color(0xffFFC93E);
                   break;    
                   default:
-                   return Colors.blue;
+                   return Color(0xff3E64FF);
     }
  }
         void handleOption(String value) async {
           print(value);
-          if (value == 'View') {
+          if (value == 'Update') {
              bool result = await Navigator.push(context, 
             MaterialPageRoute(builder: (context) =>TripDetail(this.trip))
        );
       }
          if (value == 'Delete') {
            dbHelper.deleteTrip(this.trip.id);
+           setState(() {});
          }
      }
 }

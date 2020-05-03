@@ -30,7 +30,7 @@ class TripDetail extends StatefulWidget {
    final _types = [
      'Business',
      'Education',
-     'Health',
+     'Hospital',
      'Vacation'
      ];
    String _type  = 'Business';
@@ -257,7 +257,7 @@ class TripDetail extends StatefulWidget {
                    child: Container( // making the width to infinity makes it fill the page
                        width: double.infinity,
                        child: RaisedButton(
-                        color: Colors.blue,
+                        color: Color(0xff3E64FF),
                         textColor: Colors.white,
                         child: Text(
                          'Save Trip',

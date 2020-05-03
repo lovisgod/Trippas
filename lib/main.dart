@@ -46,12 +46,12 @@ class MyHomePage extends StatefulWidget {
               "Trippas",
               style: TextStyle(
                 fontSize: 40.0,
-                color: Colors.blue
+                color: Color(0xff3E64FF)
               ),
             ),
             Padding(padding: EdgeInsets.only(top: 20.0)),
             CircularProgressIndicator(
-              backgroundColor: Colors.blue,
+              backgroundColor: Color(0xffFF3E6C),
               strokeWidth: 1,
            )
          ],
@@ -66,10 +66,10 @@ class MyHomePage extends StatefulWidget {
   }
 
   route(){
-    Toast.show("Toast plugin app", context, 
+    Toast.show("Welcome User", context, 
     duration: Toast.LENGTH_SHORT,
      gravity:  Toast.BOTTOM,
-      backgroundColor: Colors.blue,
+      backgroundColor: Color(0xff3E64FF),
       textColor: Colors.white
       );
      Navigator.push(context, MaterialPageRoute(builder: (context) =>TripList()));

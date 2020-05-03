@@ -59,8 +59,8 @@ class TripList extends StatefulWidget {
                   alignment: Alignment(0.0, 0.0),
                   decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  border: Border.all(width: 1.0, color: Colors.blue),
-                  color: Colors.blue
+                  border: Border.all(width: 1.0, color: Color(0xff3E64FF)),
+                  color: Color(0xff3E64FF)
                   
                 ),
                 child: Text('$count Trip(s)', style: TextStyle(color: Colors.white)),
@@ -106,7 +106,7 @@ class TripList extends StatefulWidget {
          },
         tooltip: "Add new Todo",
         child: new Icon(Icons.add),
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xff3E64FF),
         ),
       );
       }

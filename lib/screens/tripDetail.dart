@@ -70,15 +70,16 @@ class TripDetail extends StatefulWidget {
                 bottom: 10.0
               ),
               child:  TextField( // we can use the onsubmitted here too
+              onChanged: (value) => this.updateDeparture(),
               controller: departController,
               decoration: InputDecoration(
                 hintText: 'Enter Departure',
                 // labelText: 'Departure',
                 labelStyle: textStyle,
-                border: InputBorder.none,
-                // border: OutlineInputBorder(
-                //   borderRadius: BorderRadius.circular(5.0)
-                // )
+                // border: InputBorder.none,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0)
+                )
               ),
               keyboardType: TextInputType.text,
             ),
@@ -93,28 +94,30 @@ class TripDetail extends StatefulWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
               Expanded(child:TextField( // we can use the onsubmitted here too
+              onChanged: (value) => this.updateStartD(),
               controller: startDController,
               decoration: InputDecoration(
                 hintText: 'Enter Date',
                 // labelText: 'Price',
                 labelStyle: textStyle,
-                border: InputBorder.none
-                // border: OutlineInputBorder(
-                //   borderRadius: BorderRadius.circular(5.0)
-                // )
+                // border: InputBorder.none
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0)
+                )
               ),
               keyboardType: TextInputType.datetime,
             )),
             Expanded(child:TextField( // we can use the onsubmitted here too
+             onChanged: (value) => this.updateStartT(),
               controller: startTController,
               decoration: InputDecoration(
                 hintText: 'Enter Time',
                 // labelText: 'Price',
                 labelStyle: textStyle,
-                border: InputBorder.none
-                // border: OutlineInputBorder(
-                //   borderRadius: BorderRadius.circular(5.0)
-                // )
+                // border: InputBorder.none
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0)
+                )
               ),
               keyboardType: TextInputType.datetime,
             )),
@@ -127,15 +130,16 @@ class TripDetail extends StatefulWidget {
                 bottom: 10.0
               ),
               child:  TextField( // we can use the onsubmitted here too
+               onChanged: (value) => this.updateDestination(),
               controller: destController,
               decoration: InputDecoration(
                 hintText: 'Enter Destination',
                 // labelText: 'Departure',
                 labelStyle: textStyle,
-                border: InputBorder.none,
-                // border: OutlineInputBorder(
-                //   borderRadius: BorderRadius.circular(5.0)
-                // )
+                // border: InputBorder.none,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0)
+                )
               ),
               keyboardType: TextInputType.text,
             ),
@@ -150,28 +154,30 @@ class TripDetail extends StatefulWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
               Expanded(child:TextField( // we can use the onsubmitted here too
+               onChanged: (value) => this.updateEndD(),
               controller: endDController,
               decoration: InputDecoration(
                 hintText: 'Enter Date',
                 // labelText: 'Price',
                 labelStyle: textStyle,
-                border: InputBorder.none
-                // border: OutlineInputBorder(
-                //   borderRadius: BorderRadius.circular(5.0)
-                // )
+                // border: InputBorder.none
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0)
+                )
               ),
               keyboardType: TextInputType.datetime,
             )),
             Expanded(child:TextField( // we can use the onsubmitted here too
+             onChanged: (value) => this.updateEndT(),
               controller: endTController,
               decoration: InputDecoration(
                 hintText: 'Enter Time',
                 // labelText: 'Price',
                 labelStyle: textStyle,
-                border: InputBorder.none
-                // border: OutlineInputBorder(
-                //   borderRadius: BorderRadius.circular(5.0)
-                // )
+                // border: InputBorder.none
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0)
+                )
               ),
               keyboardType: TextInputType.datetime,
             )),
@@ -190,6 +196,7 @@ class TripDetail extends StatefulWidget {
                              child: Text(value)
                            );
                          }).toList(), 
+                         isExpanded: true,
                          style: textStyle,
                          value: this._type,
                          onChanged: (String value) {
@@ -203,7 +210,9 @@ class TripDetail extends StatefulWidget {
                     top: 10.0,
                     bottom: 10.0
                   ),
-                   child: RaisedButton(
+                   child: Container( // making the width to infinity makes it fill the page
+                       width: double.infinity,
+                       child: RaisedButton(
                         color: Colors.blue,
                         textColor: Colors.white,
                         child: Text(
@@ -213,6 +222,7 @@ class TripDetail extends StatefulWidget {
                         onPressed: () {
                           save();
                         },
+                   )
                    )
                   ),
             ],
@@ -264,3 +274,20 @@ class TripDetail extends StatefulWidget {
      Navigator.pop(context, true);
     }
 }
+
+
+//  dbHelper.initializeDb();
+//     final tripsFuture = dbHelper.getTrips();
+//       tripsFuture.then((result) {
+//         List<Trip> tripList = List<Trip>();
+//        count = result.length;
+//        for (int i=0; i<count;i++) {
+//          tripList.add(Trip.fromObject(result[i]));
+//          debugPrint(tripList[i].departure);
+//        }
+//        setState(() {
+//          trips = tripList;
+//          count = count;
+//        });
+//        print(trips);
+//       });

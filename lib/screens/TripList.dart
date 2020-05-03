@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trippas/model/trip.dart';
 import 'package:trippas/screens/tripDetail.dart';
+import 'package:trippas/util/itemLayout.dart';
 import 'package:trippas/util/dbHelper.dart';
 
 
@@ -22,9 +23,11 @@ class TripList extends StatefulWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    if (trips == null) {
     trips = [];
     getData();
-        return Scaffold(
+    }
+    return Scaffold(
           body: Container(
             padding: EdgeInsets.all(10.0),
             child: Column(
@@ -80,6 +83,17 @@ class TripList extends StatefulWidget {
 
               )
                
+          ),
+          Padding(
+             padding: EdgeInsets.only(
+                 top: 10.0,
+                 bottom: 10.0
+             ),
+             child: Container(
+               height: 500,
+               child: tripListItems()
+              )
+               
           )
           ],
         ),
@@ -96,9 +110,7 @@ class TripList extends StatefulWidget {
       );
       }
     
-      void getData() {
-
-      }
+      
 
     void navigateToDetails(Trip trip) async {
        bool result = await Navigator.push(context, 
@@ -107,6 +119,41 @@ class TripList extends StatefulWidget {
      if(result ==true) {
        getData();
      }
+  }
+
+  ListView tripListItems() {
+    return ListView.builder(
+     itemCount: count,
+     itemBuilder: (BuildContext context, int position) {
+       return ListTile(
+         title: Item(trips[position])
+       );
+     },
+    );
+  }
+
+  void getData() {
+    try {
+      final dbFuture = dbHelper.initializeDb();
+      dbFuture.then((result) {
+         final tripsFuture = dbHelper.getTrips();
+        tripsFuture.then((value) {
+           List<Trip> tripLists = List<Trip>();
+           for (var item in value) {
+           tripLists.add(Trip.fromObject(item));
+            debugPrint(tripLists[0].departure);
+      }
+       setState(() {
+        trips = tripLists;
+        count = tripLists.length;
+   });
+
+   });
+  });
+  } catch (e) {
+      debugPrint(e);
+  }
+    
   }
 
 }

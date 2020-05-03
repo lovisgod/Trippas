@@ -33,7 +33,7 @@ Future<Database> get db async {
   return _db;
 }
   // create or open a db
- initializeDb() async {
+  Future<Database> initializeDb() async {
     Directory dir = await getApplicationSupportDirectory();
     String path = dir.path + 'trip.db';
     var dbTrips = await openDatabase(path, version: 1, onCreate: _createDb); // this open or create a new db

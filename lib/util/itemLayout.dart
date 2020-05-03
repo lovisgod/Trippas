@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:trippas/model/trip.dart';
+import 'package:trippas/screens/TripList.dart';
+import 'package:trippas/screens/tripDetail.dart';
+import 'package:trippas/util/dbHelper.dart';
 
 class Item extends StatefulWidget {
   Trip trip;
@@ -13,29 +16,23 @@ class Item extends StatefulWidget {
     }
     
   class _itemState extends State {
+    DbHelper dbHelper = DbHelper();
     Trip trip;
+    List<String> options = ['View','Delete'];
+    
     _itemState(this.trip);
-    // String departure;
-    // String destination;
-    // String start_date;
-    // String start_time;
-    // String end_date;
-    // String end_time;
-    // String trip_type;
   @override
   Widget build(BuildContext context) {
+  
     // TODO: implement build
     return  Card(
       child: Container(
         padding: EdgeInsets.all(5.0),
-        // width: 200.0,
-        // height: 100.0,
         child: Column(
           children: <Widget>[
              Padding(
                  padding: EdgeInsets.only(
                  top: 1.0,
-                //  bottom: 2.0
               ),
               child:ListTile(
                 title: Row(
@@ -67,7 +64,7 @@ class Item extends StatefulWidget {
           Padding(
                  padding: EdgeInsets.only(
                   top: 1.0,
-                  // bottom: 2.0
+                
               ),
               child:ListTile(
                 title: Row(
@@ -97,7 +94,7 @@ class Item extends StatefulWidget {
           Padding(
                  padding: EdgeInsets.only(
                  top: 1.0,
-                //  bottom: 2.0
+              
               ),
               child:ListTile(
                 title: Row(
@@ -127,7 +124,7 @@ class Item extends StatefulWidget {
           Padding(
                  padding: EdgeInsets.only(
                   top: 1.0,
-                  // bottom: 2.0
+                
               ),
               child:ListTile(
                 title: Row(
@@ -139,7 +136,8 @@ class Item extends StatefulWidget {
                   alignment: Alignment(0.0, 0.0),
                   decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  border: Border.all(width: 1.0, color: Colors.blue),
+                  border: Border.all(width: 1.0, color: getTypeColor(this.trip)
+                  ),
                   color: getTypeColor(this.trip)
                   ), 
                     child: Text( 
@@ -155,16 +153,21 @@ class Item extends StatefulWidget {
                  textDirection: TextDirection.ltr,
                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
                 )),
-                Expanded(child:Icon( 
-                  Icons.more_vert,
-                  color: Colors.grey,
-                  size: 24.0,
-                  semanticLabel: 'Option',
-                    )
-                    ),
-                    ],
-                   ),
-                  )     
+                Expanded(child: PopupMenuButton<String>(
+                     onSelected: handleOption,
+                     itemBuilder: (BuildContext context) {
+                    return options.map((String choice) {
+                     return PopupMenuItem<String>(
+                      value: choice,
+                      child: Text(choice),
+                   );
+                  }).toList();
+                 },
+                 )
+                 ),
+                ],
+                ),
+               )     
                 ),
                 ],
                 ),
@@ -190,4 +193,15 @@ class Item extends StatefulWidget {
                    return Colors.blue;
     }
  }
+        void handleOption(String value) async {
+          print(value);
+          if (value == 'View') {
+             bool result = await Navigator.push(context, 
+            MaterialPageRoute(builder: (context) =>TripDetail(this.trip))
+       );
+      }
+         if (value == 'Delete') {
+           dbHelper.deleteTrip(this.trip.id);
+         }
+     }
 }

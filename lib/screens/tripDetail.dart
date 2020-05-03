@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:trippas/model/trip.dart';
 import 'package:trippas/util/dbHelper.dart';
 
@@ -40,6 +41,8 @@ class TripDetail extends StatefulWidget {
    TextEditingController endDController = TextEditingController();
    TextEditingController endTController = TextEditingController();
 
+   
+
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.title;
@@ -50,6 +53,15 @@ class TripDetail extends StatefulWidget {
       this.title = 'Update Trip';
       debugPrint(this.title);
     }
+    this.departController.text = this.trip.departure;
+    this.destController.text = this.trip.destination;
+    this.startDController.text = this.trip.start_date;
+    this.startTController.text  = this.trip.start_time;
+    this.endDController.text = this.trip.end_date;
+    this.endTController.text = this.trip.end_time;
+    // if (this.trip.trip_type.isNotEmpty) {
+    //   this._type = this.trip.trip_type;
+    // }
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
@@ -62,7 +74,15 @@ class TripDetail extends StatefulWidget {
       ),
       body: Container(
         padding: EdgeInsets.all(15.0),
-        child: Column(
+        child:LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints viewportConstraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: viewportConstraints.maxHeight,
+            ),
+            child:
+        Column(
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(
@@ -106,6 +126,18 @@ class TripDetail extends StatefulWidget {
                 )
               ),
               keyboardType: TextInputType.datetime,
+              onTap: () {
+                  DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime(2020, 1, 1),
+                              maxTime: DateTime(2030, 6, 7), onChanged: (date) {
+                            print('change $date');
+                            startDController.text = '${date.day} ${this.getMonth(date.month)} ${date.year}';
+                            this.updateStartD();
+                          }, onConfirm: (date) {
+                            print('confirm $date');
+                          }, currentTime: DateTime.now(), locale: LocaleType.en);
+              },
             )),
             Expanded(child:TextField( // we can use the onsubmitted here too
              onChanged: (value) => this.updateStartT(),
@@ -166,6 +198,18 @@ class TripDetail extends StatefulWidget {
                 )
               ),
               keyboardType: TextInputType.datetime,
+               onTap: () {
+                  DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime(2020, 1, 1),
+                              maxTime: DateTime(2030, 6, 7), onChanged: (date) {
+                            print('change $date');
+                            endDController.text = '${date.day} ${this.getMonth(date.month)} ${date.year}';
+                            this.updateEndD();
+                          }, onConfirm: (date) {
+                            print('confirm $date');
+                          }, currentTime: DateTime.now(), locale: LocaleType.en);
+              },
             )),
             Expanded(child:TextField( // we can use the onsubmitted here too
              onChanged: (value) => this.updateEndT(),
@@ -226,6 +270,9 @@ class TripDetail extends StatefulWidget {
                    )
                   ),
             ],
+          )
+          )
+          );}
           ),
         ),
       );
@@ -273,21 +320,46 @@ class TripDetail extends StatefulWidget {
       }
      Navigator.pop(context, true);
     }
+
+    String getMonth(int value) {
+      switch (value) {
+        case 1:
+           return 'Jan';
+        break;
+        case 2:
+           return 'Feb';
+        break;
+        case 3:
+           return 'Mar';
+        break;
+        case 4:
+           return 'April';
+        break;
+        case 5:
+           return 'May';
+        break;
+        case 6:
+           return 'Jun';
+        break;
+        case 7:
+           return 'July';
+        break;
+        case 8:
+           return 'Aug';
+        break;
+        case 9:
+           return 'Sep';
+        break;
+        case 10:
+           return 'Oct';
+        break;
+        case 11:
+           return 'Nov';
+        break;
+        case 12:
+           return 'Dec';
+        break;
+        default:
+      }
+    }
 }
-
-
-//  dbHelper.initializeDb();
-//     final tripsFuture = dbHelper.getTrips();
-//       tripsFuture.then((result) {
-//         List<Trip> tripList = List<Trip>();
-//        count = result.length;
-//        for (int i=0; i<count;i++) {
-//          tripList.add(Trip.fromObject(result[i]));
-//          debugPrint(tripList[i].departure);
-//        }
-//        setState(() {
-//          trips = tripList;
-//          count = count;
-//        });
-//        print(trips);
-//       });
